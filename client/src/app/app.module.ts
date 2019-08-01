@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, NG_VALIDATORS } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -17,16 +17,17 @@ import {
   PathLocationStrategy,
   HashLocationStrategy
 } from '@angular/common';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 
 @NgModule({
   imports: [BrowserModule, FormsModule, AppRoutingModule, HttpClientModule],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
-    // {
-    //   provide: NG_VALIDATORS,
-    //   useExisting: SelectRequiredValidatorDirective,
-    //   multi: true
-    // }
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true
+    }
   ],
   exports: [],
   declarations: [

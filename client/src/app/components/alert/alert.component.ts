@@ -34,7 +34,7 @@ export class AlertComponent implements OnInit {
   }
 
   removeAlert(alert: Alert) {
-    // $('div[id="alert_' + this.alerts.indexOf(alert) + '"]').fadeOut('slow'); //with animation effect
+    $('div[id="alert_' + this.alerts.indexOf(alert) + '"]').fadeOut('slow'); //with animation effect
     // this.alerts = this.alerts.filter(x => x !== alert); //without animation
   }
 

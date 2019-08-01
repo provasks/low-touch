@@ -1,0 +1,168 @@
+<app-modal-problem [data]="modalData"></app-modal-problem>
+<div class="alert-container">
+  <app-alert></app-alert>
+</div>
+
+<div class="report" *ngIf="host">
+  <div class="details">
+    <div class="title">System Details</div>
+    <div class="host" *ngIf="host">
+      <table class="table table-striped table-bordered table-sm table-hover">
+        <tbody>
+          <tr>
+            <td>Hostname</td>
+            <td>
+              {{ host.hostname }}
+            </td>
+          </tr>
+          <tr>
+            <td>Serial</td>
+            <td>{{ host.sys_serial_number }}</td>
+          </tr>
+          <tr>
+            <td>Model</td>
+            <td>{{ host.sys_model }}</td>
+          </tr>
+          <tr>
+            <td>Cluster Name</td>
+            <td>{{ host.cluster_name }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="external">
+        <a
+          target="_blank"
+          href="https://smartsolve.netapp.com/search?query={{
+            host.sys_serial_number
+          }}"
+          >SmartSolve</a
+        ><a
+          target="_blank"
+          href="https://mysupport.netapp.com/myautosupport/dist/index.html#/clusterview?SerialNo={{
+            host.sys_serial_number
+          }}"
+          >ClusterViewer</a
+        >
+      </div>
+      <div class="aggregates" *ngIf="host.aggregates">
+        <div class="title">Aggregates</div>
+        <div *ngFor="let aggregate of host.aggregates">
+          <table
+            class="table table-striped table-bordered table-sm table-hover"
+          >
+            <tbody>
+              <tr>
+                <td>
+                  Aggregate
+                </td>
+                <td>{{ aggregate.aggr_name }}</td>
+              </tr>
+              <tr *ngIf="aggregate['config']">
+                <td>Disks</td>
+                <td>
+                  {{ aggregate['config'].raidSize }}
+                </td>
+              </tr>
+              <tr *ngIf="aggregate['config']">
+                <td>Raid Type</td>
+                <td>
+                  {{ aggregate['config'].raidType }}
+                </td>
+              </tr>
+              <tr *ngIf="aggregate['thresholdExceedDate']">
+                <td>Threshold Exceed Date</td>
+                <td>{{ aggregate['thresholdExceedDate'] }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div [class]="aggregate.aggr_name" colspan="2">
+            <app-chart [aggregate]="aggregate"></app-chart>
+          </div>
+          <div class="accuracy">
+            <div class="text">Prediction Accuracy</div>
+            <div
+              class="btn btn-primary btn-sm"
+              (click)="sendFeedback('aggr', aggregate.aggr_name, host.hostname)"
+            >
+              Looks Good
+            </div>
+            <div
+              class="btn btn-primary btn-sm"
+              (click)="showPopup('Aggregates', aggregate.aggr_name)"
+            >
+              Report Problem
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="recomendation" *ngIf="host.recomendations">
+    <div class="title">Recommendation</div>
+    <table class="table table-striped table-bordered table-sm table-hover">
+      <thead>
+        <th>Name</th>
+        <th>Action</th>
+        <th>Aggregate</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let recomendation of host.recomendations">
+          <td>{{ recomendation.rec }}</td>
+          <td>{{ recomendation.action }}</td>
+          <td>{{ recomendation.aggr_name }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="accuracy">
+      <div class="text">Recomendation Accuracy</div>
+      <div
+        class="btn btn-primary btn-sm"
+        (click)="sendFeedback('Recommandation')"
+      >
+        Looks Good
+      </div>
+      <div class="btn btn-primary btn-sm" (click)="showPopup('Recommandation')">
+        Report Problem
+      </div>
+    </div>
+  </div>
+
+  <div class="parts" *ngIf="host.parts">
+    <div class="title">Parts To Quote</div>
+    <table class="table table-striped table-bordered table-sm table-hover">
+      <thead>
+        <th>Part Number</th>
+        <th>Quantity</th>
+        <th>Description</th>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let part of host.parts">
+          <td>{{ part.part_number }}</td>
+          <td>{{ part.quantity }}</td>
+          <td>{{ part.description }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="accuracy">
+      <div class="text">Parts List Accuracy</div>
+      <div
+        class="btn btn-primary btn-sm"
+        (click)="sendFeedback('Part to queue')"
+      >
+        Looks Good
+      </div>
+      <div class="btn btn-primary btn-sm" (click)="showPopup('Parts')">
+        Report Problem
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="alert alert-success" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Feedback received!</strong>
+  </div> -->
+</div>

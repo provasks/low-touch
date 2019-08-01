@@ -1,0 +1,60 @@
+<!-- <app-alert></app-alert> -->
+<div id="problem-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ data.title }}</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #myForm="ngForm" class="was-validated">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">From:</label>
+            <input
+              type="text"
+              name="email"
+              class="form-control"
+              [(ngModel)]="data.email"
+              #email="ngModel"
+              placeholder="yourname@domain.com"
+              required
+              pattern="[a-zA-Z]+[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z.]{2,5}"
+              novalidate
+            />
+            <!-- <pre>{{ myForm.value | json }} {{ myForm.valid }}</pre> -->
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label"
+              >Explain the problem:</label
+            >
+            <textarea
+              class="form-control"
+              placeholder="[Write your message]"
+              name="message"
+              [(ngModel)]="data.problem"
+              #message="ngModel"
+              required
+            ></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          [disabled]="!myForm.valid"
+          (click)="sendMessage()"
+        >
+          Send message
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

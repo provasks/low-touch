@@ -1,0 +1,69 @@
+.report {
+  .details,
+  .aggregates,
+  .recomendation,
+  .parts {
+    margin-bottom: 1rem;
+    .title {
+      background-color: #0067c5;
+      color: white;
+      padding: 7px;
+    }
+    .table {
+      margin-bottom: 0;
+    }
+    .external {
+      margin: 10px 0;
+      // cursor: not-allowed !important;
+      a {
+        margin-right: 2rem;
+        // pointer-events: none;
+        // color: #dddddd;
+      }
+    }
+    .accuracy {
+      margin: 5px 0 10px 0;
+      .text {
+        display: inline-block;
+        line-height: 2em;
+        width: 200px;
+      }
+      .btn {
+        margin-left: 1em;
+      }
+    }
+  }
+
+  .aggregates {
+    .chart {
+      background-color: #ffffff;
+    }
+  }
+
+  // .alert {
+  //   opacity: 0;
+  //   display: none;
+  //   position: fixed;
+  //   top: 0;
+  //   right: 0;
+  //   min-width: 200px;
+  //   .close {
+  //     position: absolute;
+  //     top: -2px;
+  //     right: 3px;
+  //     color: white;
+  //     font-size: 13px;
+  //   }
+  // }
+  // .alert-success {
+  //   color: white;
+  //   background-color: #2a2ad8;
+  //   border-color: #1414e2;
+  // }
+}
+.alert-container {
+  position: fixed;
+  top: 20%;
+  right: 0;
+  width: 200px;
+}

@@ -1,0 +1,23 @@
+{
+  "name": "low-touch-api",
+  "version": "1.0.0",
+  "description": "API for the poc project low-touch",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "smpt",
+    "express",
+    "mailer"
+  ],
+  "author": "Provas Kumar Saha",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.14.0",
+    "nodemailer": "^6.3.0",
+    "nodemon": "^1.19.1"
+  }
+}

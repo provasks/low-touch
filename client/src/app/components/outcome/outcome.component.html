@@ -1,0 +1,73 @@
+<div *ngIf="filteredHosts" class="outcome">
+  <div class="title">{{ filterText }} ({{ filteredHosts.length }})</div>
+
+  <table
+    id="dtOutcome"
+    *ngIf="filteredHosts.length"
+    class="table table-striped table-bordered table-sm table-hover"
+  >
+    <thead class="table-info">
+      <tr>
+        <th class="sorting" *ngFor="let header of filteredHosts.headers">
+          {{ header | titlecase }}
+        </th>
+      </tr>
+    </thead>
+    <tbody *ngIf="pagination.records">
+      <tr *ngFor="let host of pagination.records">
+        <td>
+          <a
+            [routerLink]="[
+              '/report',
+              host.cluster_uuid,
+              host.sys_serial_number,
+              host.hostname
+            ]"
+            >{{ host.hostname }}</a
+          >
+        </td>
+        <td>{{ host.aggr_name }}</td>
+        <td>{{ host.cluster_name }}</td>
+        <td>{{ host.sys_serial_number }}</td>
+        <td>{{ host.customer }}</td>
+        <td>{{ host.sys_model }}</td>
+        <td>{{ host.reviewed ? 'Reviewed' : 'Not Reviewed' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <nav>
+    <ul class="pagination pagination-sm justify-content-end">
+      <li style="margin-right: 5px; line-height: 31px">
+        From {{ pagination.from }} to {{ pagination.to }} out of
+        {{ filteredHosts.length }}
+      </li>
+      <li
+        [class]="
+          pagination.currentPage === 1 ? 'page-item disabled' : 'page-item'
+        "
+      >
+        <a class="page-link" (click)="gotoPrevious()">Previous</a>
+      </li>
+
+      <li
+        [class]="
+          page === pagination.currentPage ? ' page-item active' : 'page-item'
+        "
+        *ngFor="let page of pagination.pages"
+      >
+        <a class="page-link" (click)="changePage($event, page)">{{ page }}</a>
+      </li>
+
+      <li
+        [class]="
+          pagination.to >= filteredHosts.length
+            ? 'page-item disabled'
+            : 'page-item'
+        "
+      >
+        <a class="page-link" (click)="gotoNext()">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>

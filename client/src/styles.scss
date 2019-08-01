@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+.modal-dialog {
+  .modal-header {
+    background-color: #0067c5;
+    color: white;
+    padding: 10px 1rem;
+    .close {
+      color: white;
+
+      &:hover {
+        opacity: 1;
+        text-shadow: 0 1px 0 #000000;
+      }
+    }
+  }
+}
+.tooltip {
+  border: 1px solid #000000;
+  border-radius: 5px;
+  padding: 5px;
+  color: white;
+  background-color: #000000;
+  max-width: 250px;
+}
+
+body,
+.pagination-sm .page-link {
+  font-size: 13px;
+}

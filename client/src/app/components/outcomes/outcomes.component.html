@@ -1,0 +1,8 @@
+<ul class="outcomes" *ngIf="result && result.Outcomes.length">
+  <div class="title">Outcomes ({{ result.size }})</div>
+  <li class="outcome" *ngFor="let outcome of result.Outcomes">
+    <a [routerLink]="['/outcomes', outcome.rec, 1]"
+      >{{ outcome.rec }} ({{ outcome.size }})</a
+    >
+  </li>
+</ul>

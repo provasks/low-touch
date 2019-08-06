@@ -3,8 +3,8 @@ export const RegEx = {
 };
 
 export const Settings = {
-  // API_PATH: 'http://localhost:3011/api'
-  API_PATH: 'http://10.103.165.10:3011/api'
+  API_PATH: 'http://localhost:3011/api'
+  // API_PATH: 'http://10.103.165.10:3011/api'
 };
 
 // chart configuration

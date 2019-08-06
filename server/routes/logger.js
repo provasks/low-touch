@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var helper = require('./../common/helper');
-
+var LogType = require('./../common/logtype');
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
   console.log('Time: ', Date.now().toLocaleString());
@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
 });
 // define the log route
 router.post('/log', function(req, res) {
-  helper.logMessage(req.body.msg);
+  helper.log(LogType.Event, req.body.msg);
   res.send({ msg: 'success' });
 });
 

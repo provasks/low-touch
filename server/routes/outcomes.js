@@ -5,7 +5,7 @@ var router = express.Router();
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
-  console.log('Time: ', Date.now());
+  // console.log('Time: ', new Date().toLocaleString());
   next();
 });
 // define the home page route
@@ -30,13 +30,13 @@ router.get('/:uuid/:serial/:hostname', function(req, res) {
 
 router.put('/:data', function(req, res) {
   var data = req.body.data;
-  dbHandler.updateReview(data)
+  dbHandler.updateReview(data);
   const message = `Received GOOD feedback for ${
-      data.type === 'aggr'
-        ? `Aggregate: ${data.aggr}, Host: ${data.hostname}, `
-        : `${data.type} of `
-    }Cluster: ${data.uuid}, Serial: ${data.serial}`;
-  helper.logMessage(message);
+    data.type === 'aggr'
+      ? `Aggregate: ${data.aggr}, Host: ${data.hostname}, `
+      : `${data.type} of `
+  }Cluster: ${data.uuid}, Serial: ${data.serial}`;
+  helper.logFeedback(message);
   res.send(data);
 });
 

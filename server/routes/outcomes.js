@@ -2,6 +2,7 @@ var express = require('express');
 var dbHandler = require('./../dal/db-handler');
 var helper = require('./../common/helper');
 var router = express.Router();
+var Type = require('./../common/logtype');
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -29,14 +30,19 @@ router.get('/:uuid/:serial/:hostname', function(req, res) {
 });
 
 router.put('/:data', function(req, res) {
+  let message = '';
   var data = req.body.data;
-  dbHandler.updateReview(data);
-  const message = `Received GOOD feedback for ${
-    data.type === 'aggr'
-      ? `Aggregate: ${data.aggr}, Host: ${data.hostname}, `
-      : `${data.type} of `
-  }Cluster: ${data.uuid}, Serial: ${data.serial}`;
-  helper.logFeedback(message);
+  if (data.type === 'aggr') {
+    dbHandler.updateReview(data);
+    message = `Received GOOD feedback for the Aggregate: ${data.aggr}, Host: ${
+      data.hostname
+    }, Cluster: ${data.uuid}, Serial: ${data.serial}`;
+  } else {
+    message = `Received GOOD feedback for the ${data.type} of Cluster: ${
+      data.uuid
+    }, Serial: ${data.serial}`;
+  }
+  helper.log(Type.Feedback, message);
   res.send(data);
 });
 

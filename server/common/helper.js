@@ -1,69 +1,46 @@
 var fs = require('fs');
 var settings = require('../settings');
-// import LogType from './logtype';
 var LogType = require('./logtype');
 
-var feedback_log_file = fs.createWriteStream(
-  settings.PROJECT_DIR + '/feedback/feedback.log',
-  {
+const logFile = {
+  feedback: fs.createWriteStream(
+    settings.PROJECT_DIR + settings.logFile.feedback,
+    {
+      flags: 'w'
+    }
+  ),
+  error: fs.createWriteStream(settings.PROJECT_DIR + settings.logFile.error, {
     flags: 'w'
-  }
-);
-var events_log_file = fs.createWriteStream(
-  settings.PROJECT_DIR + '/feedback/events.log',
-  {
+  }),
+  event: fs.createWriteStream(settings.PROJECT_DIR + settings.logFile.event, {
     flags: 'w'
-  }
-);
-var error_log_file = fs.createWriteStream(
-  settings.PROJECT_DIR + '/feedback/error.log',
-  {
+  }),
+  info: fs.createWriteStream(settings.PROJECT_DIR + settings.logFile.info, {
     flags: 'w'
-  }
-);
+  })
+};
+
 class Helper {
   log(type, msg) {
     const time = new Date().toLocaleString();
+    console.log(`Feedback At ${time} => ${msg}\n`);
     switch (type) {
       case LogType.Feedback:
-        console.log(`Feedback At ${time} => ${msg}\n`);
-        feedback_log_file.write(`At ${time}: ${msg}\n`);
+        logFile.feedback.write(`At ${time} => ${msg}\n`);
         break;
       case LogType.Error:
-        console.log(`Error At ${time} => ${msg}\n`);
-        error_log_file.write(`At ${time}: ${msg}\n`);
+        logFile.error.write(`At ${time} => ${msg}\n`);
         break;
       case LogType.Event:
-        console.log(`Event At ${time} => ${msg}\n`);
-        events_log_file.write(`{
-          \t "At": "${time}", 
-          ${msg}
-        },\n`);
+        logFile.event.write(`{
+            \t "At" => "${time}", 
+            ${msg}
+          },\n`);
         break;
       default:
-        console.log(`Default At ${time} => ${msg}\n`);
+        logFile.info.write(`At ${time} => ${msg}\n`);
     }
   }
 }
-// logFeedback(msg) {
-//   feedback_log_file.write(msg + '\n');
-// }
-// logError(msg) {
-//   error_log_file.write(
-//     `{
-//     \t "At": "${time}",
-//     ${msg}
-//   },\n`
-//   );
-// }
-// logEvent(method, url) {
-//   events_log_file.write(
-//     `{
-//       \t "At": "${new Date().toLocaleString()}",
-//       \t "Event": "${method}",
-//       \t "Route": "${url}"
-//     },\n`
-//   );
-// }
 
 module.exports = new Helper();

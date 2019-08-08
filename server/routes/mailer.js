@@ -1,10 +1,12 @@
 var express = require('express');
 var nodemailer = require('nodemailer');
 var router = express.Router();
+var helper = require('./../common/helper');
+var Type = require('./../common/logtype');
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
-  console.log('Time: ', Date.now());
+  // console.log('Time: ', Date.now());
   next();
 });
 // define the home page route
@@ -28,7 +30,7 @@ router.post('/send', function(req, res) {
     // to: 'provasks@gmail.com',
     // cc: ['provas.saha@netapp.com'],
     to: 'ng-lowtouch-feedback@netapp.com',
-    cc: ['provas.saha@netapp.com', 'nibu.habel@netapp.com'],
+    cc: ['nibu.habel@netapp.com'],
 
     subject: 'Issue from Low-Touch', // Subject line
     html: `
@@ -127,10 +129,10 @@ router.post('/send', function(req, res) {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log(error);
+      helper.log(Type.Error, error);
       res.status(400).send({ success: false });
     } else {
-      console.log(info);
+      // console.log(info);
       res.status(200).send({ success: true });
     }
   });

@@ -18,6 +18,8 @@ import {
   HashLocationStrategy
 } from '@angular/common';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
+import { LaserComponent } from './components/laser/laser.component';
+import { PatternComponent } from './pattern/pattern.component';
 
 @NgModule({
   imports: [BrowserModule, FormsModule, AppRoutingModule, HttpClientModule],
@@ -38,7 +40,9 @@ import { LoaderInterceptor } from './interceptors/loader.interceptor';
     ModalProblemComponent,
     ChartComponent,
     LoaderComponent,
-    AlertComponent
+    AlertComponent,
+    LaserComponent,
+    PatternComponent
   ],
   bootstrap: [AppComponent]
 })

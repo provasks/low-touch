@@ -1,0 +1,104 @@
+<div class="row">
+  <div class="col-sm-8 canvas"></div>
+  <div class="col-sm-4">
+    <div class="row">
+      <div class="col-sm-6 fields">
+        <div class="field">
+          <div>Outer Radius</div>
+          <input type="number" min="0" [(ngModel)]="R" />
+        </div>
+        <div class="field">
+          <div>Inner Radius</div>
+          <input type="number" min="0" [(ngModel)]="r" />
+        </div>
+        <div class="field">
+          <div>Distance</div>
+          <input type="number" min="0" [(ngModel)]="d" />
+        </div>
+      </div>
+      <div class="col-sm-6 fields">
+        <div class="field">
+          <div class="row">
+            <div class="col-sm-6">
+              <div>Background</div>
+              <input
+              *ngIf="backColor" 
+                type="color"
+                [(ngModel)]="backColor"
+                (change)="changeBackColor(backColor)"
+              />
+            </div>
+            <div class="col-sm-6">
+              <div>Stroke</div>
+              <input
+                *ngIf="strokeColor"
+                type="color"
+                [(ngModel)]="strokeColor"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <div>Time</div>
+          <input type="number" min="1" [(ngModel)]="speed" />
+        </div>
+        <div class="commands">
+          <button
+            id="draw"
+            class="btn btn-primary btn-sm"
+            (click)="drawPattern()"
+            [disabled]="!completed"
+          >
+            Draw
+          </button>
+          <button
+            id="stop"
+            class="btn btn-primary btn-sm"
+            (click)="stopDrawing()"
+            [disabled]="completed"
+          >
+            Stop
+          </button>
+        </div>
+      </div>
+    </div>
+    <table class="table">
+      <thead>
+        <th>Outer</th>
+        <th>Inner</th>
+        <th>Distance</th>
+        <th>Color</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pattern of patterns; let i = index">
+          <td>{{ pattern.R }}</td>
+          <td>{{ pattern.r }}</td>
+          <td>{{ pattern.d }}</td>
+          <td>
+            <input
+              *ngIf="strokeColor"
+              type="color"
+              [(ngModel)]="pattern.color"
+              (change)="changeColor(pattern.color, i + 1)"
+              (keyup)="changeColor(pattern.color, i + 1)"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <div class="row" *ngFor="let pattern of patterns; let i = index">
+      <div class="col-sm-3">{{ pattern.R }}</div>
+      <div class="col-sm-3">{{ pattern.r }}</div>
+      <div class="col-sm-3">{{ pattern.d }}</div>
+      <div class="col-sm-3">
+        <input
+          *ngIf="strokeColor"
+          type="color"
+          [(ngModel)]="pattern.color"
+          (change)="changeColor(pattern.color, i + 1)"
+          (keyup)="changeColor(pattern.color, i + 1)"
+        />
+      </div>
+    </div> -->
+  </div>
+</div>
